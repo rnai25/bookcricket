@@ -9,7 +9,7 @@ interface MatchSummaryProps {
   onNewGame: () => void;
 }
 
-export function MatchSummary({ gameState, onRematch, onNewGame }: MatchSummaryProps) {
+export function MatchSummaryNew({ gameState, onRematch, onNewGame }: MatchSummaryProps) {
   // Helper function to get team's innings index
   const getTeamInningsIndex = (team: Team) => {
     return team.id === gameState.battingFirst.id ? 0 : 1;
@@ -146,4 +146,4 @@ export function MatchSummary({ gameState, onRematch, onNewGame }: MatchSummaryPr
   );
 }
 
-export default MatchSummary;
+export default MatchSummaryNew; 

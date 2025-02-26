@@ -12,9 +12,16 @@ export interface GameState {
   team1: Team;
   team2: Team;
   currentInnings: number;
+  score: number[];
+  wickets: number[];
+  overs: number;
+  currentOver: number;
+  currentBall: number;
   ballHistory: string[][];
-  tossWinner: string | null;
-  battingFirst: string | null;
+  isGameOver: boolean;
+  battingFirst: Team;
+  bowlingFirst: Team;
+  tossWinner: Team;
   totalOvers: number;
   gameCompleted: boolean;
   target: number | null;

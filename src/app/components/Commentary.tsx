@@ -1,6 +1,6 @@
 'use client';
 
-import { GameState } from './BookCricket';
+import { GameState } from '@/lib/types/game';
 import { useEffect, useRef } from 'react';
 
 interface CommentaryProps {
@@ -48,7 +48,7 @@ export function Commentary({ gameState }: CommentaryProps) {
     <div className="bg-emerald-800/70 rounded-lg border border-emerald-700/50 p-4">
       {/* Toss Result - Fixed at top */}
       <div className="text-yellow-400 font-semibold mb-4 pb-3 border-b border-emerald-700/50">
-        {gameState.battingFirst} won the toss and elected to bat first
+        {gameState.battingFirst.name} won the toss and elected to bat first
       </div>
 
       {/* Live Commentary Header */}

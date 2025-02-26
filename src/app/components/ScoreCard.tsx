@@ -32,7 +32,7 @@ export function Scoreboard({ gameState }: ScoreboardProps) {
         <div className="bg-emerald-900/70 rounded p-3">
           <div className="flex items-center gap-2 text-[#FFD700] font-semibold mb-2">
             <Trophy className="w-4 h-4 text-[#FFD700]" />
-            <span>{currentBattingTeam} 🏏</span>
+            <span>{currentBattingTeam.name} 🏏</span>
           </div>
           <div className="text-4xl font-bold text-white">
             {gameState.score[gameState.currentInnings]}/{gameState.wickets[gameState.currentInnings]}
@@ -68,7 +68,7 @@ export function Scoreboard({ gameState }: ScoreboardProps) {
         {/* Bowling Team */}
         <div className="text-right">
           <div className="text-emerald-200 mb-1">
-            {currentBowlingTeam} 🎯
+            {currentBowlingTeam.name} 🎯
           </div>
           <div className="text-sm text-emerald-300/80">
             Bowling

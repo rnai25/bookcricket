@@ -7,29 +7,13 @@ import { Scoreboard } from '@/app/components/ScoreCard';
 import { Commentary } from '@/app/components/Commentary';
 import { Controls } from '@/app/components/Controls';
 import { GameStats } from '@/app/components/GameStats';
-import { MatchSummary } from '@/app/components/MatchSummary';
-import { Team } from '@/lib/types/game';
+import { MatchSummaryNew } from '@/app/components/MatchSummaryNew';
+import { Team, GameState } from '@/lib/types/game';
 import { LogOut, History } from 'lucide-react';
 import { TossScreen } from '@/app/components/TossScreen';
 import Link from 'next/link';
 import { db } from '@/lib/firebase/firebase';
 import { collection, addDoc } from 'firebase/firestore';
-
-export interface GameState {
-  team1: Team;
-  team2: Team;
-  currentInnings: number;
-  score: number[];
-  wickets: number[];
-  overs: number;
-  currentOver: number;
-  currentBall: number;
-  ballHistory: string[][];
-  isGameOver: boolean;
-  battingFirst: Team;
-  bowlingFirst: Team;
-  tossWinner: Team;
-}
 
 function BookCricket() {
   const { user, signOut } = useAuth();
@@ -59,6 +43,13 @@ function BookCricket() {
       battingFirst: battingTeam,
       bowlingFirst: bowlingTeam,
       tossWinner: battingTeam,
+      totalOvers: selectedTeams.overs,
+      gameCompleted: false,
+      target: null,
+      tossResult: {
+        winner: battingTeam.name,
+        decision: 'bat'
+      }
     });
     
     // Reset outcome and summary state
@@ -258,7 +249,7 @@ function BookCricket() {
           </>
         ) : showSummary ? (
           // Show match summary when the game is over and summary is shown
-          <MatchSummary 
+          <MatchSummaryNew 
             gameState={gameState}
             onRematch={handleRematch}
             onNewGame={resetGame}

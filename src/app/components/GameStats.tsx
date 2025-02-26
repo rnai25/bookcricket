@@ -1,6 +1,6 @@
 'use client';
 
-import { GameState } from './BookCricket';
+import { GameState, Team } from '@/lib/types/game';
 import { Trophy } from 'lucide-react';
 
 interface GameStatsProps {
@@ -22,8 +22,8 @@ export function GameStats({ gameState }: GameStatsProps) {
   } = gameState;
 
   // Helper function to get team's innings index
-  const getTeamInningsIndex = (team: string) => {
-    return team === battingFirst ? 0 : 1;
+  const getTeamInningsIndex = (team: Team) => {
+    return team.id === battingFirst.id ? 0 : 1;
   };
 
   // Calculate run rates
@@ -33,7 +33,7 @@ export function GameStats({ gameState }: GameStatsProps) {
   };
 
   // Get boundaries count
-  const getBoundaries = (team: string) => {
+  const getBoundaries = (team: Team) => {
     const inningsIndex = getTeamInningsIndex(team);
     const inningsHistory = gameState.ballHistory[inningsIndex];
     const fours = inningsHistory.filter(ball => ball === '4').length;
@@ -42,7 +42,7 @@ export function GameStats({ gameState }: GameStatsProps) {
   };
 
   // Get dot balls
-  const getDotBalls = (team: string) => {
+  const getDotBalls = (team: Team) => {
     const inningsIndex = getTeamInningsIndex(team);
     const inningsHistory = gameState.ballHistory[inningsIndex];
     return inningsHistory.filter(ball => ball === '0').length;
@@ -61,10 +61,10 @@ export function GameStats({ gameState }: GameStatsProps) {
 
     if (team1Score > team2Score) {
       const margin = team1Wickets < 10 ? `${10 - team1Wickets} wickets` : `${team1Score - team2Score} runs`;
-      return `${team1} won by ${margin}`;
+      return `${team1.name} won by ${margin}`;
     } else if (team2Score > team1Score) {
       const margin = team2Wickets < 10 ? `${10 - team2Wickets} wickets` : `${team2Score - team1Score} runs`;
-      return `${team2} won by ${margin}`;
+      return `${team2.name} won by ${margin}`;
     }
     return 'Match Tied!';
   };
@@ -79,7 +79,7 @@ export function GameStats({ gameState }: GameStatsProps) {
       <div className="grid grid-cols-2 gap-8">
         {/* First Innings */}
         <div>
-          <h3 className="text-yellow-400 font-semibold mb-2">{battingFirst}&apos;s Innings</h3>
+          <h3 className="text-yellow-400 font-semibold mb-2">{battingFirst.name}&apos;s Innings</h3>
           <div className="space-y-2 text-emerald-200">
             <p>Score: {score[0]}/{wickets[0]}</p>
             <p>Overs: {overs}.0</p>
@@ -91,10 +91,10 @@ export function GameStats({ gameState }: GameStatsProps) {
 
         {/* Second Innings */}
         <div>
-          <h3 className="text-yellow-400 font-semibold mb-2">{bowlingFirst}&apos;s Innings</h3>
+          <h3 className="text-yellow-400 font-semibold mb-2">{bowlingFirst.name}&apos;s Innings</h3>
           <div className="space-y-2 text-emerald-200">
             <p>Score: {score[1]}/{wickets[1]}</p>
-            <p>Overs: {currentInnings === 1 ? `${currentOver}.${currentBall}` : '0.0'}</p>
+            <p>Overs: {gameState.currentInnings === 1 ? `${currentOver}.${currentBall}` : '0.0'}</p>
             <p>Run Rate: {getRunRate(score[1], currentOver)}</p>
             <p>Boundaries: {getBoundaries(bowlingFirst)}</p>
             <p>Dot Balls: {getDotBalls(bowlingFirst)}</p>

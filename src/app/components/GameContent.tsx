@@ -2,11 +2,11 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Team, GameState } from '@/lib/types/game';
-import ScoreCard from './ScoreCard';
+import { Scoreboard } from './ScoreCard';
 import GameControls from './GameControls';
 import LiveCommentary from './LiveCommentary';
 import TeamSelection from './TeamSelection';
-import MatchSummary from './MatchSummary';
+import { MatchSummaryNew } from './MatchSummaryNew';
 import GameHistory from './GameHistory';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { saveGameResult } from '@/lib/firebase/firebaseUtils';
@@ -17,7 +17,7 @@ const GameContent = () => {
   const [gameState, setGameState] = useState<GameState>({
     team1: {
       id: 'team1',
-      name: 'India',
+      name: '',
       score: 0,
       wickets: 0,
       overs: 0,
@@ -25,30 +25,74 @@ const GameContent = () => {
     },
     team2: {
       id: 'team2',
-      name: 'Australia',
+      name: '',
       score: 0,
       wickets: 0,
       overs: 0,
       isBatting: false
     },
     currentInnings: 0,
+    score: [0, 0],
+    wickets: [0, 0],
+    overs: 1,
+    currentOver: 0,
+    currentBall: 0,
     ballHistory: [[], []],
-    tossWinner: null,
-    battingFirst: null,
+    tossWinner: {
+      id: '',
+      name: '',
+      score: 0,
+      wickets: 0,
+      overs: 0,
+      isBatting: false
+    },
+    battingFirst: {
+      id: '',
+      name: '',
+      score: 0,
+      wickets: 0,
+      overs: 0,
+      isBatting: true
+    },
+    bowlingFirst: {
+      id: '',
+      name: '',
+      score: 0,
+      wickets: 0,
+      overs: 0,
+      isBatting: false
+    },
     totalOvers: 1,
     gameCompleted: false,
+    isGameOver: false,
     target: null,
     tossResult: null,
   });
 
   const handleGameStart = (team1Name: string, team2Name: string, overs: number) => {
-    setGameState(prev => ({
-      ...prev,
-      team1: { ...prev.team1, name: team1Name },
-      team2: { ...prev.team2, name: team2Name },
-      totalOvers: overs,
-      tossWinner: 'team1',
-    }));
+    setGameState(prev => {
+      const team1 = { ...prev.team1, name: team1Name };
+      const team2 = { ...prev.team2, name: team2Name };
+      // Randomly decide toss winner
+      const tossWinner = Math.random() > 0.5 ? team1 : team2;
+      // For simplicity, toss winner always chooses to bat
+      const battingFirst = tossWinner;
+      const bowlingFirst = tossWinner.id === team1.id ? team2 : team1;
+      
+      return {
+        ...prev,
+        team1,
+        team2,
+        totalOvers: overs,
+        tossWinner,
+        battingFirst,
+        bowlingFirst,
+        tossResult: {
+          winner: tossWinner.name,
+          decision: 'bat'
+        }
+      };
+    });
   };
 
   return (
@@ -83,13 +127,8 @@ const GameContent = () => {
               <TeamSelection onStartGame={handleGameStart} />
             ) : (
               <div className="space-y-4">
-                <ScoreCard 
-                  team1={gameState.team1}
-                  team2={gameState.team2}
-                  target={gameState.target}
-                  totalOvers={gameState.totalOvers}
-                  ballHistory={gameState.ballHistory}
-                  currentInnings={gameState.currentInnings}
+                <Scoreboard 
+                  gameState={gameState}
                 />
               </div>
             )}
