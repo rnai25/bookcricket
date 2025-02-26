@@ -1,22 +1,27 @@
 'use client';
 
-import { GameState } from './BookCricket';
+import { Team } from '@/lib/types/game';
 import { Trophy } from 'lucide-react';
 
-interface ScoreboardProps {
-  gameState: GameState;
+interface ScoreCardProps {
+  team1: Team;
+  team2: Team;
+  target: number | null;
+  totalOvers: number;
+  ballHistory: string[][];
+  currentInnings: number;
 }
 
-export function Scoreboard({ gameState }: ScoreboardProps) {
-  const currentBattingTeam = gameState.currentInnings === 0 
-    ? gameState.battingFirst 
-    : gameState.bowlingFirst;
-
-  const currentBowlingTeam = gameState.currentInnings === 0
-    ? gameState.bowlingFirst
-    : gameState.battingFirst;
-
-  const formattedOvers = `${gameState.currentOver}.${gameState.currentBall}`;
+export function ScoreCard({ 
+  team1,
+  team2,
+  target,
+  totalOvers,
+  ballHistory,
+  currentInnings 
+}: ScoreCardProps) {
+  const currentBattingTeam = currentInnings === 0 ? team1 : team2;
+  const currentBowlingTeam = currentInnings === 0 ? team2 : team1;
 
   return (
     <div className="bg-emerald-800/70 rounded-lg border border-emerald-700/50 p-4">
@@ -28,10 +33,10 @@ export function Scoreboard({ gameState }: ScoreboardProps) {
             <span>{currentBattingTeam.name}</span>
           </div>
           <div className="text-4xl font-bold text-white">
-            {gameState.score[gameState.currentInnings]}/{gameState.wickets[gameState.currentInnings]}
+            {currentBattingTeam.score}/{currentBattingTeam.wickets}
           </div>
           <div className="text-emerald-200 text-sm">
-            {formattedOvers} overs
+            {currentBattingTeam.overs} overs
           </div>
           <div className="text-emerald-300/60 text-xs mt-2">
             Match Progress
@@ -40,7 +45,7 @@ export function Scoreboard({ gameState }: ScoreboardProps) {
             <div 
               className="bg-emerald-500 h-1.5 rounded-full transition-all duration-300"
               style={{ 
-                width: `${((gameState.currentOver * 6 + gameState.currentBall) / (gameState.overs * 6)) * 100}%` 
+                width: `${(currentBattingTeam.overs / totalOvers) * 100}%` 
               }}
             />
           </div>
@@ -55,23 +60,13 @@ export function Scoreboard({ gameState }: ScoreboardProps) {
             to bowl
           </div>
           
-          {gameState.currentInnings === 1 && (
+          {target && (
             <>
               <div className="text-right text-4xl font-bold text-[#FFD700] mt-2">
-                {gameState.score[0]}/{gameState.wickets[0]}
+                Target: {target}
               </div>
               <div className="text-emerald-200 text-sm">
-                {gameState.overs}.0 overs
-              </div>
-            </>
-          )}
-          {gameState.currentInnings === 0 && (
-            <>
-              <div className="text-right text-4xl font-bold text-[#FFD700] mt-2">
-                0/0
-              </div>
-              <div className="text-emerald-200 text-sm">
-                0.0 overs
+                Required Rate: {((target - currentBattingTeam.score) / (totalOvers - currentBattingTeam.overs)).toFixed(2)}
               </div>
             </>
           )}
