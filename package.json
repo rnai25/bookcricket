@@ -1,6 +1,6 @@
 {
-  "name": "your-project-name",
-  "version": "0.1.0",
+  "name": "book-cricket-game",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
