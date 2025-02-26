@@ -2,18 +2,33 @@
 
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 
 export default function AuthPage() {
-  const { user, signInWithGoogle } = useAuth()
+  const { user, loading, signInWithGoogle } = useAuth()
   const router = useRouter()
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   useEffect(() => {
-    if (user) {
+    // Only redirect if authentication state is fully loaded and user exists
+    if (!loading && user && !isRedirecting) {
+      setIsRedirecting(true)
       router.push('/')
     }
-  }, [user, router])
+  }, [user, loading, router, isRedirecting])
+
+  // Show loading spinner while auth state is loading or while redirecting
+  if (loading || isRedirecting) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-600 mx-auto"></div>
+          <p className="mt-3 text-emerald-800">Loading...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -29,4 +44,4 @@ export default function AuthPage() {
       </div>
     </div>
   )
-} 
+}

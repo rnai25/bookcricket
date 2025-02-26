@@ -58,7 +58,7 @@ const MatchSummary = ({ team1, team2, onRematch, onNewGame }: MatchSummaryProps)
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <h3 className="text-yellow-400 text-sm mb-2">{team1.name}'s Innings</h3>
+            <h3 className="text-yellow-400 text-sm mb-2">{team1.name}&apos;s Innings</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-300">Score</span>
@@ -86,7 +86,7 @@ const MatchSummary = ({ team1, team2, onRematch, onNewGame }: MatchSummaryProps)
           </div>
 
           <div>
-            <h3 className="text-yellow-400 text-sm mb-2">{team2.name}'s Innings</h3>
+            <h3 className="text-yellow-400 text-sm mb-2">{team2.name}&apos;s Innings</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-300">Score</span>

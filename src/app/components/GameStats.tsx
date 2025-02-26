@@ -79,7 +79,7 @@ export function GameStats({ gameState }: GameStatsProps) {
       <div className="grid grid-cols-2 gap-8">
         {/* First Innings */}
         <div>
-          <h3 className="text-yellow-400 font-semibold mb-2">{battingFirst}'s Innings</h3>
+          <h3 className="text-yellow-400 font-semibold mb-2">{battingFirst}&apos;s Innings</h3>
           <div className="space-y-2 text-emerald-200">
             <p>Score: {score[0]}/{wickets[0]}</p>
             <p>Overs: {overs}.0</p>
@@ -91,7 +91,7 @@ export function GameStats({ gameState }: GameStatsProps) {
 
         {/* Second Innings */}
         <div>
-          <h3 className="text-yellow-400 font-semibold mb-2">{bowlingFirst}'s Innings</h3>
+          <h3 className="text-yellow-400 font-semibold mb-2">{bowlingFirst}&apos;s Innings</h3>
           <div className="space-y-2 text-emerald-200">
             <p>Score: {score[1]}/{wickets[1]}</p>
             <p>Overs: {currentInnings === 1 ? `${currentOver}.${currentBall}` : '0.0'}</p>

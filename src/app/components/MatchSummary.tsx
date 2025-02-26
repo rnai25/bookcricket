@@ -77,7 +77,7 @@ export function MatchSummary({ gameState, onRematch, onNewGame }: MatchSummaryPr
         {/* Innings Details */}
         <div className="grid grid-cols-2 gap-8 mb-8">
           <div>
-            <h3 className="text-yellow-400 font-semibold mb-4">{gameState.battingFirst}'s Innings</h3>
+            <h3 className="text-yellow-400 font-semibold mb-4">{gameState.battingFirst}&apos;s Innings</h3>
             <div className="space-y-2 text-emerald-200">
               <p>Score: {gameState.score[0]}/{gameState.wickets[0]}</p>
               <p>Overs: {gameState.overs}.0</p>
@@ -88,7 +88,7 @@ export function MatchSummary({ gameState, onRematch, onNewGame }: MatchSummaryPr
           </div>
 
           <div>
-            <h3 className="text-yellow-400 font-semibold mb-4">{gameState.bowlingFirst}'s Innings</h3>
+            <h3 className="text-yellow-400 font-semibold mb-4">{gameState.bowlingFirst}&apos;s Innings</h3>
             <div className="space-y-2 text-emerald-200">
               <p>Score: {gameState.score[1]}/{gameState.wickets[1]}</p>
               <p>Overs: {gameState.overs}.0</p>

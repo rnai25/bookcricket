@@ -10,15 +10,3 @@ export function useAuth() {
   }
   return context;
 }
-
-const signOut = async () => {
-  try {
-    await auth.signOut();
-    // Clear any local storage or state if present
-    localStorage.clear();
-    // Force reload the page to clear all state
-    window.location.href = '/';
-  } catch (error) {
-    console.error('Error signing out:', error);
-  }
-};

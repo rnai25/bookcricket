@@ -1,13 +1,7 @@
-// src/app/layout.tsx
-import ClientLayout from './components/ClientLayout';
-import { Metadata } from 'next';
-import './globals.css';  // Add this import for Tailwind CSS
-import { AuthProvider } from '@/lib/contexts/AuthContext';  // Make sure this import exists
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Book Cricket',
-  description: 'Experience the nostalgia of book cricket in a modern way!',
-};
+import { AuthProvider } from '@/lib/contexts/AuthContext';
+import { Metadata } from 'next';
 
 export default function RootLayout({
   children,
@@ -16,11 +10,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white">
+      <body>
         <AuthProvider>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
+          {children}
         </AuthProvider>
       </body>
     </html>
