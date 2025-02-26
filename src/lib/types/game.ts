@@ -5,6 +5,7 @@ export interface Team {
   wickets: number;
   overs: number;
   isBatting: boolean;
+  ballHistory?: string[];
 }
 
 export interface GameState {

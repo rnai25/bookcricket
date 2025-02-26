@@ -2,6 +2,7 @@
 
 import { AuthProvider } from '@/lib/contexts/AuthContext';
 import { Metadata } from 'next';
+import '@/app/globals.css';
 
 export default function RootLayout({
   children,

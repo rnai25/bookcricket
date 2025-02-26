@@ -2,15 +2,15 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/lib/hooks/useAuth';
-import { GameSetup } from './GameSetup';
-import { Scoreboard } from './Scoreboard';
-import { Commentary } from './Commentary';
-import { Controls } from './Controls';
-import { GameStats } from './GameStats';
-import { MatchSummary } from './MatchSummary';
-import { Team } from '@/types/game';
+import { GameSetup } from '@/app/components/GameSetup';
+import { Scoreboard } from '@/app/components/ScoreCard';
+import { Commentary } from '@/app/components/Commentary';
+import { Controls } from '@/app/components/Controls';
+import { GameStats } from '@/app/components/GameStats';
+import { MatchSummary } from '@/app/components/MatchSummary';
+import { Team } from '@/lib/types/game';
 import { LogOut, History } from 'lucide-react';
-import { TossScreen } from './TossScreen';
+import { TossScreen } from '@/app/components/TossScreen';
 import Link from 'next/link';
 import { db } from '@/lib/firebase/firebase';
 import { collection, addDoc } from 'firebase/firestore';
