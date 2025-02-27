@@ -18,7 +18,8 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { GameResult } from "../lib/types/gameHistory";
+//import { GameResult } from "../types/gameHistory";
+import { GameResult } from "../../app/types/gameHistory";
 
 // Auth functions
 export const logoutUser = () => signOut(auth);
